@@ -1,30 +1,38 @@
-var container = document.getElementById('container');
-window.addEventListener("keyup", function (e) {
-    console.log(e.key); // 在控制台输出按下的键
+const container = document.getElementById("container");
 
-    let container = document.getElementById("container");
-    let text = container.innerText; // 获取 container 当前的文本内容
+// 自動聚焦 div 以接收鍵盤事件
+container.focus();
 
-    // 如果第一个字符和按键匹配，则删除
-    if (text.length > 0 && text[0] === e.key) {
-        text = text.substring(1); // 移除第一个字符
-    }
-
-    // 追加 1-3 个随机字符
-    text += getRandomChars();
-
-    // 更新 container 内容
-    container.innerText = text;
-});
-
-// 生成 1-3 个随机字符
-function getRandomChars() {
-    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    let count = Math.floor(Math.random() * 3) + 1; // 生成 1 到 3 之间的随机数
-    let result = "";
-    for (let i = 0; i < count; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
+// 移除所有非英文字元（保險起見）
+function cleanText(text) {
+  return text.replace(/[^A-Z]/gi, '');
 }
 
+window.addEventListener("keyup", function (e) {
+  const key = e.key.toUpperCase();
+  console.log("按下的鍵：", key);
+
+  // 清除 container 的內容，確保不會有奇怪字元
+  let text = cleanText(container.textContent);
+
+  // 如果第一個字元和按下的鍵相同，刪掉它
+  if (text.length > 0 && text[0] === key) {
+    text = text.slice(1);
+  }
+
+  // 加入新的字元
+  text += generateNewChars();
+
+  // 更新畫面
+  container.textContent = text;
+});
+
+function generateNewChars() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const count = Math.floor(Math.random() * 3) + 1; // 1~3 個字
+  let result = "";
+  for (let i = 0; i < count; i++) {
+    result += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return result;
+}
