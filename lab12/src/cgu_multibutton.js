@@ -1,30 +1,29 @@
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AlarmIcon from '@mui/icons-material/Alarm';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-const styleArgument = { fontSize: '20px', color: 'red' }; // 注意 color 拼字
-
-const changeText = (event) => {
-  event.target.innerText += " 被點了";
-};
-
-const multiButton = (num) => {
+const MultiButton = () => {
   const output = [];
 
-  for (let i = 1; i <= num; ++i) {
-    output.push(
-      <Button
-        key={i}
-        variant="contained"
-        color="primary"
-        onClick={changeText}
-        style={styleArgument}
-      >
-        第{i}個按鍵
-      </Button>
-    );
-  }
+  output.push(
+    <IconButton key="cart" color="primary" aria-label="add to shopping cart">
+      <AddShoppingCartIcon />
+    </IconButton>
+  );
+  output.push(
+    <IconButton key="delete" color="primary" aria-label="delete">
+      <DeleteIcon />
+    </IconButton>
+  );
+  output.push(
+    <IconButton key="alarm" color="primary" aria-label="add an alarm">
+      <AlarmIcon />
+    </IconButton>
+  );
 
   return <div>{output}</div>;
 };
 
-export default multiButton;
+export default MultiButton;
 
